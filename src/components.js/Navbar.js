@@ -1,8 +1,8 @@
 import React from "react";
 import {connect} from "react-redux";
-import {db, auth} from "./firebase";
-import Select from 'react-select';
-//import "react-dropdown/style.css";
+import {auth} from "./firebase";
+import {withRouter} from "react-router-dom";
+import {compose} from "redux";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const options = [
@@ -22,45 +22,43 @@ class Navbar extends React.Component{
     handleChange = selectedOption => {
         this.setState({ selectedOption });
         console.log(`Option selected:`, selectedOption);
-      };
+    };
+    addNewProduct = (id) => {
+        this.props.history.push({pathname:`/addproduct/${id}`})
+    }
     render(){
         const { selectedOption } = this.state;
         return(
             <div>
-                <nav class="navbar navbar-dark bg-dark">
-                    <div className="row">
-                        <div className="d-flex justify-content-around">
-                            <div className="blockquote mt-2 mx-5  text-white">
-                                FlipShop
+                <nav className="navbar navbar-light bg-dark justify-content-around">
+                    <a className="navbar-brand text-white">FlipShop</a>
+                    <form className="form-inline">
+                        <input 
+                            className="form-control mr-sm-2" 
+                            type="search" 
+                            placeholder="Search" 
+                            aria-label="Search" />
+                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                    <div>
+                        {this.props.user.map((user) => (
+                            <a key={user.uid} className="text-white blockquote" href="#">{user.displayName}</a>
+                        ))}
+                    </div>
+                    <a className="text-white blockquote mt-3" href="#">More</a>
+                    <a className="text-white blockquote mt-3" href="#">🛒Cart</a>
+                    <div>
+                        {this.props.user.map((user) => (
+                            <div key={user.uid}>
+                                {(user.email=== "akashrana0153@gmail.com") ? (
+                                    <div className="text-white blockquote mt-3" 
+                                        onClick={this.addNewProduct(user.uid)}>
+                                            Add new Product
+                                    </div>
+                                    ):(null)
+                                }
                             </div>
-                            <div className="mx-5">
-                                <form className="form-inline  my-2 my-lg-0">
-                                    <input 
-                                        className="form-control mr-sm-2" 
-                                        type="search" 
-                                        placeholder="Search" 
-                                        aria-label="Search" 
-                                    />
-                                    <button 
-                                        className="btn btn-outline-light text-white my-2 my-sm-0" 
-                                        type="submit">
-                                            Search
-                                    </button>
-                                </form>
-                            </div>
-                            <div className="mx-5 form-control">
-                                {this.props.user.map((user) => (
-                                    <Select
-                                        key={user.uid}
-                                        closeMenuOnSelect={false}
-                                        placeholder={user.displayName}
-                                        value={selectedOption}
-                                        onChange={this.handleChange}
-                                        options={options}
-                                    />
-                                ))}
-                            </div>
-                        </div>
+                        ))} 
                     </div>
                 </nav>
             </div>
@@ -71,4 +69,5 @@ const mapStateToProps = (state) => {
     //console.log("state", state)
     return {user: state}
 }
-export default connect(mapStateToProps)(Navbar);
+export default compose( withRouter, connect(mapStateToProps))(Navbar);
+

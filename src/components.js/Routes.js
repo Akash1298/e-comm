@@ -12,7 +12,7 @@ class Routes extends React.Component{
                     <Switch>
                         <Route exact path="/" component={SignInCheck} />
                         <Route exact path="/test" component={Test} />
-                        <Route exact path="/addproduct" component={AddProduct} />
+                        <Route exact path="/addproduct/:id" component={AddProduct} />
                     </Switch>
                 </BrowserRouter>
             </div>
