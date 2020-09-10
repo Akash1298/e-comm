@@ -2,15 +2,8 @@ import React from "react";
 import {connect} from "react-redux";
 import {auth} from "./firebase";
 import {withRouter} from "react-router-dom";
-import {compose} from "redux";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-const options = [
-    { value: 'notification', label: 'Notifications' },
-    { value: 'edit_profile', label: 'Edit Profile' },
-    { value: 'logOut', label: 'Log Out' },
-  ];
-  
 
 class Navbar extends React.Component{
     state={
@@ -42,32 +35,30 @@ class Navbar extends React.Component{
                     </form>
                     <div>
                         {this.props.user.map((user) => (
-                            <a key={user.uid} className="text-white blockquote" href="#">{user.displayName}</a>
+                            <button key={user.uid} className="btn btn-dark btn-outline-white btn-lg mt-2" href="#">{user.displayName}</button>
                         ))}
                     </div>
-                    <a className="text-white blockquote mt-3" href="#">More</a>
-                    <a className="text-white blockquote mt-3" href="#">🛒Cart</a>
+                    <button className="btn btn-dark btn-outline-white btn-lg mt-2" href="#">🛒Cart</button>
                     <div>
                         {this.props.user.map((user) => (
                             <div key={user.uid}>
                                 {(user.email=== "akashrana0153@gmail.com") ? (
-                                    <div className="text-white blockquote mt-3" 
-                                        onClick={this.addNewProduct(user.uid)}>
-                                            Add new Product
-                                    </div>
+                                    <button className="btn btn-dark btn-outline-white btn-lg mt-2" 
+                                        onClick={() => this.addNewProduct(user.uid)}
+                                        >Add new Product
+                                    </button>
                                     ):(null)
                                 }
                             </div>
                         ))} 
                     </div>
+                    <button className="btn btn-dark btn-outline-white btn-lg mt-2" onClick={() => this.logOut()}>Log Out</button>
                 </nav>
             </div>
         )
     }
 }
 const mapStateToProps = (state) => {
-    //console.log("state", state)
     return {user: state}
 }
-export default compose( withRouter, connect(mapStateToProps))(Navbar);
-
+export default  connect(mapStateToProps)(withRouter(Navbar));
