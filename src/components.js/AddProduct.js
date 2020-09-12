@@ -1,5 +1,6 @@
 import React from "react";
-import {db} from "./firebase";
+import firebase from "firebase"
+import {db, storageRef} from "./firebase";
 import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
@@ -14,27 +15,62 @@ class AddProduct extends React.Component{
         productName:"",
         price:"",
         description:"",
+        image:[],
+        url:""
     }
-    onFormSubmit = (event) => {
-        event.preventDefault()
-        db.collection("Products").add({
-            sellerName: this.state.sellerName,
-            productName: this.state.productName,
-            price: this.state.price,
-            description:this.state.description
-        })
-        .then(function(docRef) {
-            console.log("Document written with ID: ", docRef.id);
-            this.setState({
-                sellerName:"",
-                productName:"",
-                price:"",
-                description:"",
+    onFormSubmit = () => {
+        var that = this
+        var file = this.state.image;
+        var metadata = {contentType: 'image/jpeg' };
+        var uploadTask = storageRef.child('products/' + file.name).put(file, metadata);
+        uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+        snapshot => {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+        this.setState({progress: Math.round(progress)})
+        switch (snapshot.state) {
+            case firebase.storage.TaskState.PAUSED:
+                console.log('Upload is paused');
+                break;
+            case firebase.storage.TaskState.RUNNING: 
+                console.log('Upload is running');
+                break;
+        }
+        },error => {
+            switch (error.code){
+                case 'storage/unauthorized':
+                    break;
+                case 'storage/canceled':
+                    break;
+                case 'storage/unknown':
+                    break;
+        }},() => {
+            uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL){
+            console.log('File available at', downloadURL);
+            that.setState({url:downloadURL})
+        }).then(()=> {
+            db.collection("Products").add({
+                sellerName: this.state.sellerName,
+                productName: this.state.productName,
+                price: this.state.price,
+                description:this.state.description,
+                image:this.state.url
             })
+            .then(function(docRef) {
+                console.log("Document written with ID: ", docRef.id);
+                that.setState({
+                    sellerName:"",
+                    productName:"",
+                    price:"",
+                    description:"",
+                })
+            })
+            .catch(function(error) {
+                console.error("Error adding document: ", error);
+            });
         })
-        .catch(function(error) {
-            console.error("Error adding document: ", error);
-        });
+        })
+        
         alert("Added Successfully")
     }
     render(){
@@ -94,8 +130,9 @@ class AddProduct extends React.Component{
                     </div>
                     <div>
                         <FilePond 
-                            allowMultiple={true} 
-                            //onupdatefiles={fileItems => fileItems.map((fileItem) => this.setState({image:fileItem.file}))}   
+                            required
+                            allowMultiple={false} 
+                            onupdatefiles={fileItems => fileItems.map((fileItem) => this.setState({image:fileItem.file}))}   
                         />
                     </div>
                     <div>

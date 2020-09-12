@@ -12,6 +12,7 @@ class SignIn extends React.Component{
         lastName:"",
         newUserId:"",
         phoneNumber:"",
+        gender:null,
         newUserPassword:"",
         confirmPassword:"",
         oldUser:true,
@@ -45,9 +46,19 @@ class SignIn extends React.Component{
             } else{
                 auth.createUserWithEmailAndPassword(id, password).then((u) => {
                     var user = auth.currentUser;
-                    user.updateProfile({
-                        displayName: this.state.firstName ,
-                    })
+                    if(this.state.gender === "Female"){
+                        user.updateProfile({
+                            displayName: this.state.firstName ,
+                            phoneNumber:this.state.phoneNumber,
+                            photoURL:"https://firebasestorage.googleapis.com/v0/b/test-1183b.appspot.com/o/images%2FFemale.jpg?alt=media&token=310af8fc-8b05-425f-9f5c-7aa143e02a04"
+                        })
+                    }else{
+                        user.updateProfile({
+                            displayName: this.state.firstName ,
+                            phoneNumber:this.state.phoneNumber,
+                            photoURL:"https://firebasestorage.googleapis.com/v0/b/test-1183b.appspot.com/o/images%2FMale.jpg?alt=media&token=fe4c2025-9792-4c31-bdb8-c1aa69e419db"
+                        })
+                    }
                     db.collection("Users").doc(user.uid).set({
                         email:this.state.newUserId,
                         firstName:this.state.firstName,
@@ -187,6 +198,17 @@ class SignIn extends React.Component{
                                                     value={this.state.confirmPassword}
                                                     onChange={(event) => this.setState({confirmPassword:event.target.value})}
                                                 />
+                                            </div>
+                                            <div className='my-3'  >
+                                                <select 
+                                                    className="custom-select mr-sm-2 " 
+                                                    value={this.state.gender} 
+                                                    onChange={event => this.setState({gender:event.target.value})}>
+                                                    <option>Select Gender</option>
+                                                    <option value='Male'>Male</option>
+                                                    <option value='Female'>Female</option>
+                                                    <option value='Others'>Others</option>
+                                                </select>
                                             </div>
                                             <p className=" my-4">By continuing, you agree to Flipkart's Terms of Use and Privacy Policy.</p>
                                             <button className=" form-control btn my-4" style={{backgroundColor:"#fb641b", color:"white"}}>CONTINUE</button>

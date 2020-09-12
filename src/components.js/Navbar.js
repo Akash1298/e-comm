@@ -7,24 +7,26 @@ import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 class Navbar extends React.Component{
     state={
-        selectedOption:null,
+        //selectedOption:null,
     }
     logOut = () => {
-        auth.signOut().then(() => console.log("Logged out Succesfully")).catch((err) => console.log(err))
+        auth.signOut().then(() => console.log("Logged out Succesfully")).catch((err) => console.log(err));
     }
-    handleChange = selectedOption => {
-        this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);
-    };
     addNewProduct = (id) => {
         this.props.history.push({pathname:`/addproduct/${id}`})
     }
+    viewProfile = (id) => {
+        if(id === undefined){
+            alert("Not found")
+        }else{
+            this.props.history.push({pathname:`/viewprofile/${id}`})
+        }
+    }
     render(){
-        const { selectedOption } = this.state;
         return(
             <div>
                 <nav className="navbar navbar-light bg-dark justify-content-around">
-                    <a className="navbar-brand text-white">FlipShop</a>
+                    <a href="#home" className="navbar-brand text-white">FlipShop</a>
                     <form className="form-inline">
                         <input 
                             className="form-control mr-sm-2" 
@@ -35,10 +37,10 @@ class Navbar extends React.Component{
                     </form>
                     <div>
                         {this.props.user.map((user) => (
-                            <button key={user.uid} className="btn btn-dark btn-outline-white btn-lg mt-2" href="#">{user.displayName}</button>
+                            <button key={user.uid} className="btn btn-dark btn-outline-white btn-lg mt-2" onClick={() => this.viewProfile(user.uid)}>{user.displayName}</button>
                         ))}
                     </div>
-                    <button className="btn btn-dark btn-outline-white btn-lg mt-2" href="#">🛒Cart</button>
+                    <button className="btn btn-dark btn-outline-white btn-lg mt-2" href="#"><span>🛒Cart</span></button>
                     <div>
                         {this.props.user.map((user) => (
                             <div key={user.uid}>

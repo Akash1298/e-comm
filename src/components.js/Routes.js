@@ -4,6 +4,7 @@ import SignInCheck from "./SignInCheck";
 import Test from "./Test";
 import AddProduct from "./AddProduct";
 import EditProfile from "./EditProfile";
+import Profile from "./Profile";
 
 class Routes extends React.Component{
     render(){
@@ -14,7 +15,8 @@ class Routes extends React.Component{
                         <Route exact path="/" component={SignInCheck} />
                         <Route exact path="/test" component={Test} />
                         <Route exact path="/addproduct/:id" component={AddProduct} />
-                        <Route exact path="/profile/:id" component={EditProfile} />
+                        <Route exact path="/viewprofile/:id" component={Profile} />
+                        <Route exact path="/editprofile/:id" component={EditProfile} />
                     </Switch>
                 </BrowserRouter>
             </div>
