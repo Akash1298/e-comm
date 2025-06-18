@@ -1,3 +1,4 @@
+'use client'
 import { Suspense } from 'react';
 import ProductCard from '@/components/ProductCard';
 import connectDB from '@/lib/db';
@@ -29,9 +30,13 @@ export default async function ProductsPage() {
         
         <Suspense fallback={<div>Loading products...</div>}>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {products.map((product) => (
-              <ProductCard key={product._id.toString()} product={product} />
-            ))}
+            {products.map((product) => {
+              console.log(product)
+              let key = product._id.toString()
+              return (
+              <ProductCard key={key} product={product} />
+              )
+  })}
           </div>
         </Suspense>
       </main>
