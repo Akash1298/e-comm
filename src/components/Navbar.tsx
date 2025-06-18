@@ -1,54 +1,47 @@
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline';
-import { useCartStore } from '@/store/cartStore';
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const totalItems = useCartStore((state) => state.totalItems());
-
-  const isActive = (path: string) => pathname === path;
-
   return (
-    <nav className="bg-white shadow-md">
+    <nav className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <Link
-              href="/"
-              className={`flex items-center px-3 py-2 text-gray-900 hover:text-gray-600 ${
-                isActive('/') ? 'border-b-2 border-blue-500' : ''
-              }`}
-            >
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center space-x-2">
+            <span className="text-2xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              StyleHub
+            </span>
+          </Link>
+
+          {/* Navigation Links */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link href="/" className="text-gray-600 hover:text-gray-900 transition-colors">
               Home
             </Link>
-            <Link
-              href="/products"
-              className={`flex items-center px-3 py-2 text-gray-900 hover:text-gray-600 ${
-                isActive('/products') ? 'border-b-2 border-blue-500' : ''
-              }`}
-            >
+            <Link href="/products" className="text-gray-600 hover:text-gray-900 transition-colors">
               Products
+            </Link>
+            <Link href="/about" className="text-gray-600 hover:text-gray-900 transition-colors">
+              About
             </Link>
           </div>
 
+          {/* Icons */}
           <div className="flex items-center space-x-4">
-            <Link
-              href="/cart"
-              className="relative p-2 text-gray-900 hover:text-gray-600"
-            >
+            <Link href="/cart" className="p-2 text-gray-600 hover:text-gray-900 transition-colors relative group">
               <ShoppingCartIcon className="h-6 w-6" />
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-blue-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                  {totalItems}
-                </span>
-              )}
+              <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                0
+              </span>
+              <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                View Cart
+              </span>
             </Link>
-            <Link
-              href="/login"
-              className="p-2 text-gray-900 hover:text-gray-600"
-            >
+            <Link href="/login" className="p-2 text-gray-600 hover:text-gray-900 transition-colors relative group">
               <UserIcon className="h-6 w-6" />
+              <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+                Login
+              </span>
             </Link>
           </div>
         </div>

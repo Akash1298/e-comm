@@ -6,12 +6,13 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'www.twtf.org.uk',
+        hostname: 'img.freepik.com',
         port: '',
-        pathname: '/wp-content/uploads/**',
+        pathname: '/free-photo/**',
       },
     ],
   },
 };
 
 export default nextConfig;
+
