@@ -2,12 +2,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCartStore } from '@/store/cartStore';
-import { Product } from '@/models/Product';
+import { ProductType } from '@/types/product';
 
 interface ProductCardProps {
-  product: Product;
+  product: ProductType;
 }
-
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
 

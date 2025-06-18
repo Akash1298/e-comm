@@ -1,7 +1,6 @@
-import mongoose, { Document, Model, Types } from 'mongoose';
+import mongoose, { Schema, Document, Model } from 'mongoose';
 
-export interface Product extends Document {
-  _id: Types.ObjectId;
+export interface ProductType extends Document {
   title: string;
   description: string;
   price: number;
@@ -9,38 +8,14 @@ export interface Product extends Document {
   inStock: boolean;
 }
 
-const productSchema = new mongoose.Schema<Product>(
-  {
-    title: {
-      type: String,
-      required: [true, 'Please provide a product title'],
-      trim: true,
-    },
-    description: {
-      type: String,
-      required: [true, 'Please provide a product description'],
-      trim: true,
-    },
-    price: {
-      type: Number,
-      required: [true, 'Please provide a product price'],
-      min: [0, 'Price cannot be negative'],
-    },
-    imageUrl: {
-      type: String,
-      required: [true, 'Please provide a product image URL'],
-      trim: true,
-    },
-    inStock: {
-      type: Boolean,
-      default: true,
-    },
-  },
-  {
-    timestamps: true,
-  }
-);
+const productSchema = new Schema<ProductType>({
+  title: { type: String, required: true, trim: true },
+  description: { type: String, required: true, trim: true },
+  price: { type: Number, required: true, min: 0 },
+  imageUrl: { type: String, required: true, trim: true },
+  inStock: { type: Boolean, default: true },
+}, { timestamps: true });
 
-const Product: Model<Product> = mongoose.models.Product || mongoose.model<Product>('Product', productSchema);
+const Product = (mongoose.models.Product as Model<ProductType>) || mongoose.model<ProductType>('Product', productSchema);
 
-export default Product; 
+export default Product;
