@@ -9,6 +9,9 @@ interface ProductCardProps {
 }
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
+  const items = useCartStore((state) => state.items);
+  const cartItem = items.find((i) => i.id === product._id.toString());
+  const maxed = cartItem && cartItem.quantity >= product.inStock;
 
   const handleAddToCart = () => {
     addItem({
@@ -16,6 +19,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       title: product.title,
       price: product.price,
       imageUrl: product.imageUrl,
+      inStock: product.inStock,
     });
   };
 
@@ -46,14 +50,14 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
           <button
             onClick={handleAddToCart}
-            disabled={!product.inStock}
+            disabled={product.inStock < 1 || maxed}
             className={`px-4 py-2 rounded-md text-white font-medium ${
-              product.inStock
+              product.inStock > 0 && !maxed
                 ? 'bg-blue-500 hover:bg-blue-600'
                 : 'bg-gray-400 cursor-not-allowed'
             }`}
           >
-            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+            {product.inStock < 1 ? 'Out of Stock' : maxed ? `Max ${product.inStock} in Cart` : 'Add to Cart'}
           </button>
         </div>
       </div>

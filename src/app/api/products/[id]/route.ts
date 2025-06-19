@@ -34,7 +34,7 @@ export async function PUT(req: NextRequest, { params }: Params) {
         description,
         price,
         imageUrl,
-        inStock,
+        inStock: Number(inStock),
       },
       { new: true, runValidators: true }
     );

@@ -5,7 +5,7 @@ export interface ProductType extends Document {
   description: string;
   price: number;
   imageUrl: string;
-  inStock: boolean;
+  inStock: number;
 }
 
 const productSchema = new Schema<ProductType>({
@@ -13,7 +13,7 @@ const productSchema = new Schema<ProductType>({
   description: { type: String, required: true, trim: true },
   price: { type: Number, required: true, min: 0 },
   imageUrl: { type: String, required: true, trim: true },
-  inStock: { type: Boolean, default: true },
+  inStock: { type: Number, required: true, min: 0, default: 0 },
 }, { timestamps: true });
 
 const Product = (mongoose.models.Product as Model<ProductType>) || mongoose.model<ProductType>('Product', productSchema);

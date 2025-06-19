@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import connectDB from '@/lib/db';
 import Product from '@/models/Product';
 import AddToCartButton from './AddToCartButton';
+import { ProductType } from '@/types/product';
 
 interface Props {
   params: {
@@ -17,11 +18,20 @@ async function getProduct(id: string) {
 }
 
 export default async function ProductPage({ params }: Props) {
-  const product = await getProduct(params.id);
+  const productDoc = await getProduct(params.id);
 
-  if (!product) {
+  if (!productDoc) {
     notFound();
   }
+
+  const product: ProductType = {
+    _id: String(productDoc._id),
+    title: productDoc.title,
+    description: productDoc.description,
+    price: productDoc.price,
+    imageUrl: productDoc.imageUrl,
+    inStock: productDoc.inStock,
+  };
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -60,11 +70,11 @@ export default async function ProductPage({ params }: Props) {
             <div className="flex items-center">
               <div
                 className={`h-4 w-4 rounded-full ${
-                  product.inStock ? 'bg-green-400' : 'bg-red-400'
+                  product.inStock > 0 ? 'bg-green-400' : 'bg-red-400'
                 }`}
               />
               <p className="ml-2 text-sm text-gray-500">
-                {product.inStock ? 'In stock' : 'Out of stock'}
+                {product.inStock > 0 ? `${product.inStock} in stock` : 'Out of stock'}
               </p>
             </div>
           </div>

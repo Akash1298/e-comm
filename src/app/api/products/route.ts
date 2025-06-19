@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
       description,
       price,
       imageUrl,
-      inStock,
+      inStock: Number(inStock),
     });
 
     return NextResponse.json(product, { status: 201 });

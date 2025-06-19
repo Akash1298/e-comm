@@ -28,12 +28,20 @@ export default function AddProductPage() {
     setLoading(true);
 
     try {
+      const payload = {
+        title: formData.name,
+        description: formData.description,
+        price: Number(formData.price),
+        imageUrl: formData.image,
+        inStock: Number(formData.stock),
+        category: formData.category,
+      };
       const response = await fetch('/api/products', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

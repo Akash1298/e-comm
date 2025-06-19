@@ -4,14 +4,23 @@ import connectDB from '@/lib/db';
 import Product from '@/models/Product';
 import { ProductType } from '@/types/product';
 import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon } from '@heroicons/react/24/outline';
+import { log } from 'console';
 
 async function getProducts(): Promise<ProductType[]> {
-  await connectDB();
-  const products = await Product.find({}).sort({ createdAt: -1 }).lean();
-  return products.map((product: any) => ({
-    ...product,
-    _id: product._id.toString(),
-  }));
+
+  try{
+    await connectDB();
+    const products = await Product.find({}).sort({ createdAt: -1 }).lean();
+  
+    return products.map((product: any) => ({
+      ...product,
+      _id: product._id.toString(),
+    }));
+  }
+  catch(err){
+    console.log("faced error", err)
+    return [];
+  }
 }
 
 export default async function ProductsPage() {

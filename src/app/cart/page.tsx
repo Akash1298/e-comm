@@ -79,7 +79,7 @@ export default function CartPage() {
                         }
                         className="rounded-md border-gray-300 py-1.5 text-base leading-5 focus:border-blue-500 focus:outline-none focus:ring-blue-500"
                       >
-                        {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                        {Array.from({ length: item.inStock }, (_, i) => i + 1).map((num) => (
                           <option key={num} value={num}>
                             {num}
                           </option>

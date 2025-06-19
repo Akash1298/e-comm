@@ -6,25 +6,25 @@ export default function AboutPage() {
     {
       name: 'John Doe',
       role: 'Founder & CEO',
-      image: 'https://img.freepik.com/free-photo/close-up-attractive-executive-with-tie_1208-74.jpg',
+      image: 'https://img.freepik.com/free-photo/portrait-young-man-with-green-hoodie_23-2148514952.jpg',
       bio: 'With over 15 years of experience in fashion retail, Sarah leads our company with passion and vision.',
     },
     {
       name: 'John Doe Brother',
       role: 'Creative Director',
-      image: 'https://img.freepik.com/free-photo/close-up-attractive-executive-with-tie_1208-74.jpg',
+      image: 'https://img.freepik.com/free-photo/man-isolated-showing-facial-emotions_1303-20262.jpg',
       bio: 'Michael brings his creative expertise to curate our unique product selection and brand identity.',
     },
     {
       name: 'John Doe Father',
       role: 'Customer Experience',
-      image: 'https://img.freepik.com/free-photo/close-up-attractive-executive-with-tie_1208-74.jpg',
+      image: 'https://img.freepik.com/free-photo/close-up-smiley-senior-man_23-2149196165.jpg',
       bio: 'Emma ensures every customer receives exceptional service and support throughout their journey.',
     },
     {
       name: 'John Doe Grandpa',
       role: 'Technology Lead',
-      image: 'https://img.freepik.com/free-photo/close-up-attractive-executive-with-tie_1208-74.jpg',
+      image: 'https://img.freepik.com/free-photo/bearded-grey-haired-elderly-man-dressed-formal-suit_273609-5562.jpg',
       bio: 'David oversees our digital infrastructure and ensures a seamless shopping experience.',
     },
   ];
