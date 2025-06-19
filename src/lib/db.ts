@@ -12,7 +12,7 @@ if (!cached) {
 }
 
 async function connectDB() {
-  console.log('Connecting to MongoDB...',MONGODB_URI);
+  console.log('Connecting to MongoDB...');
     
   if (cached.conn) {
     console.log('Using cached database connection');
