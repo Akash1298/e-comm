@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline';
+import { ShoppingBagIcon, UserIcon } from '@heroicons/react/24/outline';
 
 export default function Navbar() {
   return (
@@ -29,13 +29,10 @@ export default function Navbar() {
           {/* Icons */}
           <div className="flex items-center space-x-4">
             <Link href="/cart" className="p-2 text-gray-600 hover:text-gray-900 transition-colors relative group">
-              <ShoppingCartIcon className="h-6 w-6" />
-              <span className="absolute -top-1 -right-1 bg-indigo-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
-                0
-              </span>
-              <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+              <ShoppingBagIcon className="h-6 w-6" />
+              {/* <span className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 bg-gray-900 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
                 View Cart
-              </span>
+              </span> */}
             </Link>
             <Link href="/login" className="p-2 text-gray-600 hover:text-gray-900 transition-colors relative group">
               <UserIcon className="h-6 w-6" />
