@@ -55,6 +55,12 @@ export const useCartStore = create<CartStore>()(
       updateQuantity: (id, quantity) => {
         const item = get().items.find((i) => i.id === id);
         if (!item || quantity > item.inStock) return;
+        if (quantity < 1) {
+          set((state) => ({
+            items: state.items.filter((item) => item.id !== id),
+          }));
+          return;
+        }
         set((state) => ({
           items: state.items.map((item) =>
             item.id === id ? { ...item, quantity } : item

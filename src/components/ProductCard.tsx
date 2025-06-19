@@ -10,6 +10,7 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem);
   const updateQuantity = useCartStore((state) => state.updateQuantity);
+  const removeItem = useCartStore((state) => state.removeItem);
   const items = useCartStore((state) => state.items);
   const cartItem = items.find((i) => i.id === product._id.toString());
   const quantity = cartItem ? cartItem.quantity : 0;
@@ -33,6 +34,8 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleDecrement = () => {
     if (cartItem && quantity > 1) {
       updateQuantity(product._id.toString(), quantity - 1);
+    } else if (cartItem && quantity === 1) {
+      removeItem(product._id.toString());
     }
   };
 
@@ -70,9 +73,9 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center gap-3 mt-auto">
           <button
             onClick={handleDecrement}
-            disabled={quantity <= 1}
+            disabled={quantity < 1}
             className={`w-9 h-9 flex items-center justify-center rounded-full border text-xl font-bold transition-colors duration-150 ${
-              quantity > 1 ? 'bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50' : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
+              quantity >= 1 ? 'bg-white text-indigo-600 border-indigo-600 hover:bg-indigo-50' : 'bg-gray-100 text-gray-400 border-gray-200 cursor-not-allowed'
             }`}
             aria-label="Decrease quantity"
           >
