@@ -4,11 +4,17 @@ import { ShoppingBagIcon, SparklesIcon, TruckIcon, ShieldCheckIcon, FireIcon, St
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-to-b from-yellow-50 via-pink-50 to-blue-100">
-      {/* Hero Section with Parallax-like effect */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-fuchsia-600 via-orange-500 to-yellow-400 shadow-xl">
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/40"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-36">
+      {/* Hero Section with full background image */}
+      <section className="relative overflow-hidden shadow-xl min-h-[600px] flex items-center justify-center">
+        {/* Full background image */}
+        <img
+          src="https://img.freepik.com/free-photo/surprised-man-showing-mobile-screen-shopping-bag-standing-against-yellow-background_1258-160889.jpg"
+          alt="Surprised man shopping"
+          className="absolute inset-0 w-full h-full object-cover object-center z-0"
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/60 z-10"></div>
+        <div className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-36 w-full">
           <div className="text-center">
             <h1 className="text-6xl font-extrabold tracking-tight text-white drop-shadow-lg sm:text-7xl md:text-8xl animate-fade-in">
               Shop the Vibe
