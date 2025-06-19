@@ -18,7 +18,7 @@ async function getProducts(): Promise<ProductType[]> {
     }));
   }
   catch(err){
-    console.log("faced error", err)
+    console.log("error", err)
     return [];
   }
 }
